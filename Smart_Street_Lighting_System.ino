@@ -12,6 +12,14 @@ int led5 = 11;
 int led6 = 12;
 int led7 = 13;
 
+int Streetlight = A1;
+
+const int RLed = A0;
+int RedLed = LOW;
+
+unsigned long previousMillis = 0;
+const long interval = 1000;
+
 int proxy1 = 0;
 int proxy2 = 0;
 int proxy3 = 0;
@@ -32,6 +40,9 @@ void setup() {
   pinMode(led5, OUTPUT);
   pinMode(led6, OUTPUT);
   pinMode(led7, OUTPUT);
+
+  pinMode(Streetlight, OUTPUT);
+  pinMode(RLed, OUTPUT);
 }
 
 
@@ -47,10 +58,11 @@ if(proxy1==HIGH) {
   digitalWrite(led2, HIGH);
   digitalWrite(led3, HIGH);
 }
+
 else {
-  digitalWrite(led1,LOW);
-  digitalWrite(led2,LOW);
-  digitalWrite(led3,LOW);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
 }
 
 if(proxy2==HIGH) {
@@ -58,6 +70,7 @@ if(proxy2==HIGH) {
   digitalWrite(led3, HIGH);
   digitalWrite(led4, HIGH);
 }
+
 else {
   digitalWrite(led2, LOW);
   digitalWrite(led3, LOW);
@@ -69,6 +82,7 @@ if(proxy3==HIGH) {
   digitalWrite(led4, HIGH);
   digitalWrite(led5, HIGH);
 }
+
 else {
   digitalWrite(led3, LOW);
   digitalWrite(led4, LOW);
@@ -80,19 +94,38 @@ if(proxy4==HIGH) {
   digitalWrite(led5, HIGH);
   digitalWrite(led6, HIGH);
 }
+
 else {
   digitalWrite(led4, LOW);
   digitalWrite(led5, LOW);
   digitalWrite(led6, LOW);
 }
+
 if(proxy5==HIGH) {
-  digitalWrite(led5, HIGH);
-  digitalWrite(led6, HIGH);
-  digitalWrite(led7, HIGH);
+  digitalWrite(led7,HIGH);
 }
+
 else {
-  digitalWrite(led5,LOW);
-  digitalWrite(led6,LOW);
   digitalWrite(led7,LOW);
 }
+
+unsigned long currentMillis = millis();
+
+    if (currentMillis - previousMillis >= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+
+    // if the LED is off turn it on and vice-versa:
+    if (RedLed == LOW) {
+      RedLed = HIGH;
+    } 
+    else {
+      RedLed = LOW;
+    }
+
+    //LED with the ledState of the variable:
+    digitalWrite(RLed, RedLed);
+    }
+    
+    digitalWrite(Streetlight, HIGH);
 }
